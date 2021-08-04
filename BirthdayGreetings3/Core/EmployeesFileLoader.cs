@@ -14,10 +14,10 @@ namespace BirthdayGreetings3.Core
         {
             var fileLines = File.ReadAllLines(filename);
             IEnumerable<string> employeesLines = SkipHeader(fileLines);
-            List<EmployeeParsingException> parsingErrors = new List<EmployeeParsingException>();
-
-
+            var parsingErrors = new List<ParsingError>();
             List<Employee> list = new List<Employee>();
+
+            int lineNumber = 1;
             foreach (var employeeLine in employeesLines)
             {
                 try
@@ -27,9 +27,19 @@ namespace BirthdayGreetings3.Core
                 }
                 catch (EmployeeParsingException e)
                 {
-                    parsingErrors.Add(e);
+	                var parsingError = new ParsingError(lineNumber,e);
+                    parsingErrors.Add(parsingError);
                 }
+
+                lineNumber++;
             }
+
+            if (parsingErrors.Count > 0)
+            {
+	            throw new EmployeesLoadingException(parsingErrors);
+            }
+
+
             return list;
 
         }

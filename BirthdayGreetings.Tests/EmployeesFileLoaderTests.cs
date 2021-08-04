@@ -24,7 +24,8 @@ namespace BirthdayGreetings.Tests
         {
             var ex = Assert.Throws<EmployeesLoadingException>(() => EmployeesFileLoader.Load(@"Resources\bad_employees.txt"));
             Assert.Equal(2, ex.ExceptionsNumber);
-            Assert.Equal(1, ex.Errors.Last().LineNumber);
+            Assert.Equal(1, ex.Errors.First().LineNumber);
+            Assert.Equal(2, ex.Errors.Last().LineNumber);
         }
     }
 }

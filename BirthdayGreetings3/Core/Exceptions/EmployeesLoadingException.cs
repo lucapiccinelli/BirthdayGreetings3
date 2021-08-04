@@ -5,7 +5,15 @@ namespace BirthdayGreetings3.Core.Exceptions
 {
     public class EmployeesLoadingException : Exception
     {
-        public int ExceptionsNumber { get; set; }
-        public List<ParsingError> Errors { get; set; }
+
+	    public EmployeesLoadingException(List<ParsingError> parsingErrors)
+	    {
+		    Errors = parsingErrors;
+	    }
+
+	    public int ExceptionsNumber => Errors.Count;
+        public List<ParsingError> Errors { get;  }
+
+
     }
 }
