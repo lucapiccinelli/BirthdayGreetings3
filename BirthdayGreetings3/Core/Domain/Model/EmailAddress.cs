@@ -3,27 +3,27 @@ using System.Text.RegularExpressions;
 
 namespace BirthdayGreetings3.Core.Domain.Model
 {
-    public class EmailAdress
+    public class EmailAddress
     {
         private const string EmailRegex = @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$";
 
         public string Value { get; }
 
-        private EmailAdress(string value)
+        private EmailAddress(string value)
         {
             Value = value;
         }
 
-        public static EmailAdress Of(string employeeItem)
+        public static EmailAddress Of(string employeeItem)
         {
             if (!Regex.IsMatch(employeeItem, EmailRegex))
             {
                 throw new ArgumentException($"{employeeItem} is not in email format");
             }
-            return new EmailAdress(employeeItem);
+            return new EmailAddress(employeeItem);
         }
 
-        protected bool Equals(EmailAdress other)
+        protected bool Equals(EmailAddress other)
         {
             return Value == other.Value;
         }
@@ -38,7 +38,7 @@ namespace BirthdayGreetings3.Core.Domain.Model
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((EmailAdress) obj);
+            return Equals((EmailAddress) obj);
         }
 
         public override int GetHashCode()

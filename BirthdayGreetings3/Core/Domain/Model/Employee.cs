@@ -4,27 +4,35 @@ namespace BirthdayGreetings3.Core.Domain.Model
 {
     public class Employee
     {
-        public Employee(string firstName, string lastName, DateTime birthDate, EmailAdress emailAdress)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-            BirthDate = birthDate;
-            EmailAdress = emailAdress;
-        }
+        private readonly DateTime _leapYearBirthDate;
+        public EmailAddress EmailAddress { get; }
+        public string FirstName { get; }
+        public string LastName { get; }
+        public DateTime BirthDate { get; }
 
-        private string FirstName { get; }
-        private string LastName { get; }
-        private DateTime BirthDate { get; }
-        private EmailAdress EmailAdress { get; }
-
-        public override string ToString()
+        public Employee(string firstname, string lastname, DateTime dateOfBirth, EmailAddress email)
         {
-            return $"{nameof(FirstName)}: {FirstName}, {nameof(LastName)}: {LastName}, {nameof(BirthDate)}: {BirthDate}, {nameof(EmailAdress)}: {EmailAdress}";
+            EmailAddress = email;
+            FirstName = firstname;
+            LastName = lastname;
+            BirthDate = dateOfBirth;
+            _leapYearBirthDate = dateOfBirth;
+
+
+            if (BirthDate.Day == 29 && BirthDate.Month == 2)
+            {
+                _leapYearBirthDate = new DateTime(dateOfBirth.Year, dateOfBirth.Month, 28);
+            }
         }
 
         protected bool Equals(Employee other)
         {
-            return FirstName == other.FirstName && LastName == other.LastName && BirthDate.Equals(other.BirthDate) && Equals(EmailAdress, other.EmailAdress);
+            return _leapYearBirthDate.Equals(other._leapYearBirthDate) && Equals(EmailAddress, other.EmailAddress) && FirstName == other.FirstName && LastName == other.LastName && BirthDate.Equals(other.BirthDate);
+        }
+
+        public override string ToString()
+        {
+            return $"{nameof(_leapYearBirthDate)}: {_leapYearBirthDate}, {nameof(EmailAddress)}: {EmailAddress}, {nameof(FirstName)}: {FirstName}, {nameof(LastName)}: {LastName}, {nameof(BirthDate)}: {BirthDate}";
         }
 
         public override bool Equals(object obj)
@@ -37,7 +45,22 @@ namespace BirthdayGreetings3.Core.Domain.Model
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(FirstName, LastName, BirthDate, EmailAdress);
+            return HashCode.Combine(_leapYearBirthDate, EmailAddress, FirstName, LastName, BirthDate);
         }
+
+        public bool IsBirthday(DateTime today)
+        {
+            if (today.Day != 28 || today.Month != 2 || DateTime.IsLeapYear(today.Year))
+            {
+                return MatchDate(today, BirthDate);
+            }
+
+            return MatchDate(today, _leapYearBirthDate);
+        }
+
+        private bool MatchDate(DateTime today, DateTime dateOfBirth) =>
+            dateOfBirth.Date.Month == today.Date.Month &&
+            dateOfBirth.Date.Day == today.Date.Day &&
+            dateOfBirth.Date.Year <= today.Year;
     }
 }

@@ -28,11 +28,11 @@ namespace BirthdayGreetings3.Core
                 emailAdress);
         }
 
-        private static EmailAdress ParseEmailAdress(string[] employeeItems)
+        private static EmailAddress ParseEmailAdress(string[] employeeItems)
         {
             try
             {
-                return EmailAdress.Of(employeeItems[3]);
+                return EmailAddress.Of(employeeItems[3]);
             }
             catch (ArgumentException e)
             {
