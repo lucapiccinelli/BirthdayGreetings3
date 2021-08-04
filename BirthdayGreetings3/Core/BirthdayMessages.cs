@@ -14,17 +14,5 @@ namespace BirthdayGreetings3.Core
                 .Select(employee => new BirthdayMessage(employee))
                 .ToList();
         }
-
-        public static List<BirthdayMessage> FromCsv(string filename, in DateTime today)
-        {
-            IEmployeesRepository repository = new EmployeesCsvRepository(filename);
-            return new BirthdayMessagesService(repository).CreateMessages(today);
-        }
-
-        public static List<BirthdayMessage> FromSqlLite(string filename, in DateTime today)
-        {
-            IEmployeesRepository repository = new EmployeesSqlRepository(filename);
-            return new BirthdayMessagesService(repository).CreateMessages(today);
-        }
     }
 }

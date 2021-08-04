@@ -7,7 +7,6 @@ namespace BirthdayGreetings3
     {
         static void Main(string[] args)
         {
-            BirthdayMessages.FromCsv(args[1], DateTime.Now);
         }
     }
 }

@@ -8,26 +8,22 @@ namespace BirthdayGreetings.Tests
 {
     public class CreateBirthdaysMessagesFromFileTests
     {
-
-        [Fact]
-        public void Can_CreateBirtdhdaysMessages_FromACsv()
+        public static List<object[]> Can_CreateBirtdhdaysMessages_FromARepo_Data()
         {
-            DateTime today = EmployeesTestsHelper.John.BirthDate.AddYears(30);
-            List<BirthdayMessage> birthdayMessages = BirthdayMessages.FromCsv(@"Resources\employees.txt", today);
-
-            List<BirthdayMessage> expectedBirthdayMessages = new List<BirthdayMessage>
+            return new List<object[]>
             {
-                new BirthdayMessage(EmployeesTestsHelper.John)
+                new object[]{ new EmployeesCsvRepository(@"Resources\employees.txt")},
+                new object[]{ new EmployeesSqlRepository(@"Resources\employees.db")},
             };
-
-            Assert.Equal(expectedBirthdayMessages, birthdayMessages);
         }
 
-        [Fact]
-        public void Can_CreateBirtdhdaysMessages_FromASqlLite()
+        [Theory]
+        [MemberData(nameof(Can_CreateBirtdhdaysMessages_FromARepo_Data))]
+        public void Can_CreateBirtdhdaysMessages_FromARepo(IEmployeesRepository repository)
         {
             DateTime today = EmployeesTestsHelper.John.BirthDate.AddYears(30);
-            List<BirthdayMessage> birthdayMessages = BirthdayMessages.FromSqlLite(@"Resources\employees.db", today);
+            List<BirthdayMessage> birthdayMessages = 
+                new BirthdayMessagesService(repository).CreateMessages(today);
 
             List<BirthdayMessage> expectedBirthdayMessages = new List<BirthdayMessage>
             {
