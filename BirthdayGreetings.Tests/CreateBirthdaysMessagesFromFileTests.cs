@@ -23,5 +23,19 @@ namespace BirthdayGreetings.Tests
             Assert.Equal(expectedBirthdayMessages, birthdayMessages);
         }
 
+        [Fact]
+        public void Can_CreateBirtdhdaysMessages_FromASqlLite()
+        {
+            DateTime today = EmployeesTestsHelper.John.BirthDate.AddYears(30);
+            List<BirthdayMessage> birthdayMessages = BirthdayMessages.FromSqlLite(@"Resources\employees.db", today);
+
+            List<BirthdayMessage> expectedBirthdayMessages = new List<BirthdayMessage>
+            {
+                new BirthdayMessage(EmployeesTestsHelper.John)
+            };
+
+            Assert.Equal(expectedBirthdayMessages, birthdayMessages);
+        }
+
     }
 }

@@ -17,7 +17,13 @@ namespace BirthdayGreetings3.Core
 
         public static List<BirthdayMessage> FromCsv(string filename, in DateTime today)
         {
-            List<Employee> employees = EmployeesFileLoader.Load(filename);
+            List<Employee> employees = EmployeesCsvFileLoader.Load(filename);
+            return BirthdayMessages.Of(employees, today);
+        }
+
+        public static List<BirthdayMessage> FromSqlLite(string filename, in DateTime today)
+        {
+            List<Employee> employees = EmployeesSqlLiteFileLoader.Load(filename);
             return BirthdayMessages.Of(employees, today);
         }
     }

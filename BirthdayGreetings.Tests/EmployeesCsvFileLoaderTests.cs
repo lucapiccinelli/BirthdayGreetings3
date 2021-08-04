@@ -7,14 +7,14 @@ using Xunit;
 
 namespace BirthdayGreetings.Tests
 {
-    public class EmployeesFileLoaderTests
+    public class EmployeesCsvFileLoaderTests
     {
         [Fact]
         public void CanLoadEmployees_FromACsvFile()
         {
             List<Employee> expectedEmployees = EmployeesTestsHelper.TestEmployees;
 
-            List<Employee> employees = EmployeesFileLoader.Load(@"Resources\employees.txt");
+            List<Employee> employees = EmployeesCsvFileLoader.Load(@"Resources\employees.txt");
 
             Assert.Equal(expectedEmployees, employees);
         }
@@ -22,7 +22,7 @@ namespace BirthdayGreetings.Tests
         [Fact]
         public void LoadingBadFile_ShouldThrow_EmployeeLoadingException()
         {
-            var ex = Assert.Throws<EmployeesLoadingException>(() => EmployeesFileLoader.Load(@"Resources\bad_employees.txt"));
+            var ex = Assert.Throws<EmployeesLoadingException>(() => EmployeesCsvFileLoader.Load(@"Resources\bad_employees.txt"));
             Assert.Equal(2, ex.ExceptionsNumber);
             Assert.Equal(1, ex.Errors.First().LineNumber);
             Assert.Equal(2, ex.Errors.Last().LineNumber);

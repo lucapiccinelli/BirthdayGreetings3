@@ -8,7 +8,7 @@ using BirthdayGreetings3.Core.Exceptions;
 
 namespace BirthdayGreetings3.Core
 {
-    public static class EmployeesFileLoader
+    public static class EmployeesCsvFileLoader
     {
         public static List<Employee> Load(string filename)
         {
