@@ -6,13 +6,14 @@ using Xunit;
 
 namespace BirthdayGreetings.Tests
 {
-    public class BirthdayMessagesTests
+    public class CreateBirthdaysMessagesFromFileTests
     {
+
         [Fact]
-        public void CreatesBirthDayMessages_FromAList_OfEmployees_OnlyOneHasBirthday()
+        public void Can_CreateBirtdhdaysMessages_FromACsv()
         {
             DateTime today = EmployeesTestsHelper.John.BirthDate.AddYears(30);
-            List<BirthdayMessage> birthdayMessages = BirthdayMessages.Of(EmployeesTestsHelper.TestEmployees, today);
+            List<BirthdayMessage> birthdayMessages = BirthdayMessages.FromCsv(@"Resources\employees.txt", today);
 
             List<BirthdayMessage> expectedBirthdayMessages = new List<BirthdayMessage>
             {
@@ -21,5 +22,6 @@ namespace BirthdayGreetings.Tests
 
             Assert.Equal(expectedBirthdayMessages, birthdayMessages);
         }
+
     }
 }

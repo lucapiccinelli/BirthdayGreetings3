@@ -1,4 +1,5 @@
 ﻿using System;
+using BirthdayGreetings3.Core;
 
 namespace BirthdayGreetings3
 {
@@ -6,8 +7,7 @@ namespace BirthdayGreetings3
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-
+            BirthdayMessages.FromCsv(args[1], DateTime.Now);
         }
     }
 }
