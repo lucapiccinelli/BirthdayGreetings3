@@ -7,10 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\bad_employees.txt" />
     <None Remove="Resources\employees.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Resources\bad_employees.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\employees.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
