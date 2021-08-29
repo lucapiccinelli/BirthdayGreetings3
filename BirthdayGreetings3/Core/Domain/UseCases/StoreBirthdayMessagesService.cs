@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using BirthdayGreetings3.Core.Domain.Doors;
 using BirthdayGreetings3.Core.Domain.Model;
+using BirthdayGreetings3.Core.Doors.Repositories;
 
 namespace BirthdayGreetings3.Core.Domain.UseCases
 {
     public class StoreBirthdayMessagesService
     {
         private readonly BirthdayMessagesService _messagesService;
-        private readonly IRepository<BirthdayMessage> _inMemoryMessagesRepository;
+        private readonly IBirthdayMessageRepository _inMemoryMessagesRepository;
 
         public StoreBirthdayMessagesService(
-            IEmployeesReadSource employeesReadSource, 
-            IRepository<BirthdayMessage> messagesRepository)
+            IEmployeesReadSource employeesReadSource,
+            IBirthdayMessageRepository messagesRepository)
         {
             _messagesService = new BirthdayMessagesService(employeesReadSource);
             _inMemoryMessagesRepository = messagesRepository;
@@ -24,9 +25,9 @@ namespace BirthdayGreetings3.Core.Domain.UseCases
                 .ForEach(message => _inMemoryMessagesRepository.Save(message));
         }
 
-        public List<BirthdayMessage> GetSavedMessages()
+        public List<BirthdayMessage> GetSavedMessages(DateTime dateTime)
         {
-            return _inMemoryMessagesRepository.GetAll();
+            return _inMemoryMessagesRepository.GetByDate(dateTime);
         }
     }
 }

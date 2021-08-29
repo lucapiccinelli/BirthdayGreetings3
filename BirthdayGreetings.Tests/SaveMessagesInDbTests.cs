@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using BirthdayGreetings3.Core.Domain.Doors;
 using BirthdayGreetings3.Core.Domain.Model;
 using BirthdayGreetings3.Core.Domain.UseCases;
+using BirthdayGreetings3.Core.Doors.Repositories;
 using Moq;
 using Xunit;
 
@@ -25,7 +28,7 @@ namespace BirthdayGreetings.Tests
             var today = EmployeesTestsHelper.John.BirthDate.AddYears(30);
             service.SaveBirthDaysOf(today);
 
-            List<BirthdayMessage> messages = service.GetSavedMessages();
+            List<BirthdayMessage> messages = service.GetSavedMessages(today);
             List<BirthdayMessage> expectedMessages = new List<BirthdayMessage>
             {
                 new BirthdayMessage(EmployeesTestsHelper.John, today)
@@ -35,7 +38,7 @@ namespace BirthdayGreetings.Tests
         }
     }
 
-    public class InMemoryMessagesRepository : IRepository<BirthdayMessage>
+    public class InMemoryMessagesRepository : IBirthdayMessageRepository
     {
         private readonly List<BirthdayMessage> _birthdayMessages;
 
@@ -50,5 +53,9 @@ namespace BirthdayGreetings.Tests
         }
 
         public List<BirthdayMessage> GetAll() => _birthdayMessages;
+
+        public List<BirthdayMessage> GetByDate(DateTime dateTime) => GetAll()
+            .Where(message => message.Date == dateTime)
+            .ToList();
     }
 }
