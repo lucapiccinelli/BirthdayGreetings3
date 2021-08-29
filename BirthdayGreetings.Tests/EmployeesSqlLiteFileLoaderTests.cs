@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BirthdayGreetings3.Core;
 using BirthdayGreetings3.Core.Domain.Model;
+using BirthdayGreetings3.Core.Doors.Repositories.SqlLite;
 using BirthdayGreetings3.Core.Exceptions;
 using Xunit;
 

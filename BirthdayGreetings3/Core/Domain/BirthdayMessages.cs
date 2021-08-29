@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BirthdayGreetings3.Core.Domain.Model;
 
-namespace BirthdayGreetings3.Core
+namespace BirthdayGreetings3.Core.Domain
 {
     public static class BirthdayMessages
     {

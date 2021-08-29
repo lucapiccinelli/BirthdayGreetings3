@@ -1,12 +1,10 @@
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using BirthdayGreetings3.Core.Domain.Model;
 using BirthdayGreetings3.Core.Exceptions;
 
-namespace BirthdayGreetings3.Core
+namespace BirthdayGreetings3.Core.Doors.Repositories.Csv
 {
     public static class EmployeesCsvFileLoader
     {

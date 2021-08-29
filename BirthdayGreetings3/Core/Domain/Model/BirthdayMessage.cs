@@ -1,6 +1,4 @@
-﻿using BirthdayGreetings3.Core.Domain.Model;
-
-namespace BirthdayGreetings3.Core
+﻿namespace BirthdayGreetings3.Core.Domain.Model
 {
     public class BirthdayMessage
     {
