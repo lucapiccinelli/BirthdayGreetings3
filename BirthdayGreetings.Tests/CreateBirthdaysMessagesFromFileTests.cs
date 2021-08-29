@@ -17,18 +17,18 @@ namespace BirthdayGreetings.Tests
         {
             return new List<object[]>
             {
-                new object[]{ new EmployeesCsvRepository(@"Resources\employees.txt")},
-                new object[]{ new EmployeesSqlRepository(@"Resources\employees.db")},
+                new object[]{ new EmployeesCsvReadSource(@"Resources\employees.txt")},
+                new object[]{ new EmployeesSqlReadSource(@"Resources\employees.db")},
             };
         }
 
         [Theory]
         [MemberData(nameof(Can_CreateBirtdhdaysMessages_FromARepo_Data))]
-        public void Can_CreateBirtdhdaysMessages_FromARepo(IEmployeesRepository repository)
+        public void Can_CreateBirtdhdaysMessages_FromARepo(IEmployeesReadSource readSource)
         {
             DateTime today = EmployeesTestsHelper.John.BirthDate.AddYears(30);
             List<BirthdayMessage> birthdayMessages = 
-                new BirthdayMessagesService(repository).CreateMessages(today);
+                new BirthdayMessagesService(readSource).CreateMessages(today);
 
             List<BirthdayMessage> expectedBirthdayMessages = new List<BirthdayMessage>
             {

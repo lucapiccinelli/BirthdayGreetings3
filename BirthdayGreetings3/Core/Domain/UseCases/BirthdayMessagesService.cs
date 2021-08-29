@@ -7,16 +7,16 @@ namespace BirthdayGreetings3.Core.Domain.UseCases
 {
     public class BirthdayMessagesService
     {
-        private readonly IEmployeesRepository _repository;
+        private readonly IEmployeesReadSource _readSource;
 
-        public BirthdayMessagesService(IEmployeesRepository repository)
+        public BirthdayMessagesService(IEmployeesReadSource readSource)
         {
-            _repository = repository;
+            _readSource = readSource;
         }
 
         public List<BirthdayMessage> CreateMessages(in DateTime today)
         {
-            List<Employee> employees = _repository.GetAll();
+            List<Employee> employees = _readSource.GetAll();
             return BirthdayMessages.Of(employees, today);
         }
     }
