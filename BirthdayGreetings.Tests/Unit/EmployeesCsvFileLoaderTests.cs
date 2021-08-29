@@ -1,15 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using BirthdayGreetings3.Core;
 using BirthdayGreetings3.Core.Domain.Model;
 using BirthdayGreetings3.Core.Doors.Repositories.Csv;
 using BirthdayGreetings3.Core.Exceptions;
-using DockerTest;
 using Xunit;
-using Xunit.Abstractions;
 
-namespace BirthdayGreetings.Tests
+namespace BirthdayGreetings.Tests.Unit
 {
     public class EmployeesCsvFileLoaderTests
     {

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using BirthdayGreetings3.Core.Domain.Model;
 using Xunit;
 
-namespace BirthdayGreetings.Tests
+namespace BirthdayGreetings.Tests.Unit
 {
     public class EmployeeBirthdaysTests
     {

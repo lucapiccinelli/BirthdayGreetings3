@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using BirthdayGreetings3.Core;
-using BirthdayGreetings3.Core.Domain.Model;
+﻿using BirthdayGreetings3.Core.Domain.Model;
 using BirthdayGreetings3.Core.Doors.Repositories.Csv;
 using BirthdayGreetings3.Core.Exceptions;
 using Xunit;
 
-namespace BirthdayGreetings.Tests
+namespace BirthdayGreetings.Tests.Unit
 {
     public class EmployeeParserTests
     {

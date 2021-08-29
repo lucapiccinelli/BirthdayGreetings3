@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using BirthdayGreetings3.Core.Domain.Doors;
 using BirthdayGreetings3.Core.Domain.Model;
 using BirthdayGreetings3.Core.Domain.UseCases;
@@ -9,7 +8,7 @@ using BirthdayGreetings3.Core.Doors.Repositories;
 using Moq;
 using Xunit;
 
-namespace BirthdayGreetings.Tests
+namespace BirthdayGreetings.Tests.Unit
 {
     public class SaveMessagesInDbTests
     {
