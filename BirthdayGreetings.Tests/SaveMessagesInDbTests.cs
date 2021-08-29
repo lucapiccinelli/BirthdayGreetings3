@@ -22,12 +22,13 @@ namespace BirthdayGreetings.Tests
                 employeesRepo.Object, 
                 new InMemoryMessagesRepository());
 
-            service.SaveBirthDaysOf(EmployeesTestsHelper.John.BirthDate);
+            var today = EmployeesTestsHelper.John.BirthDate.AddYears(30);
+            service.SaveBirthDaysOf(today);
 
             List<BirthdayMessage> messages = service.GetSavedMessages();
             List<BirthdayMessage> expectedMessages = new List<BirthdayMessage>
             {
-                new BirthdayMessage(EmployeesTestsHelper.John)
+                new BirthdayMessage(EmployeesTestsHelper.John, today)
             };
 
             Assert.Equal(expectedMessages, messages);

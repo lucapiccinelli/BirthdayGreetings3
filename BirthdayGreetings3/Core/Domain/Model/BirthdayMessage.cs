@@ -1,12 +1,16 @@
-﻿namespace BirthdayGreetings3.Core.Domain.Model
+﻿using System;
+
+namespace BirthdayGreetings3.Core.Domain.Model
 {
     public class BirthdayMessage
     {
         private readonly Employee _employee;
+        private readonly DateTime _dateTime;
 
-        public BirthdayMessage(in Employee employee)
+        public BirthdayMessage(in Employee employee, DateTime dateTime)
         {
             _employee = employee;
+            _dateTime = dateTime;
         }
 
         protected bool Equals(BirthdayMessage other)
@@ -24,12 +28,12 @@
 
         public override int GetHashCode()
         {
-            return (_employee != null ? _employee.GetHashCode() : 0);
+            return HashCode.Combine(_employee, _dateTime);
         }
 
         public override string ToString()
         {
-            return $"{nameof(_employee)}: {_employee}";
+            return $"{nameof(_employee)}: {_employee}, {nameof(_dateTime)}: {_dateTime}";
         }
     }
 }
