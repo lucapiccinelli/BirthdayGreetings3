@@ -24,6 +24,29 @@ namespace BirthdayGreetings.Tests.Integration
             });
         }
 
+        [Fact]
+        public void CanSave_IntoTheRepository()
+        {
+            EfBirthdayMessagesRepository repo = new EfBirthdayMessagesRepository();
+            var now = DateTime.Now;
+            var birthdayMessage = new BirthdayMessage(new PersonName("Luca", "Piccinelli"), now);
+            repo.Save(birthdayMessage);
+
+            var db = new BirthdayDbContext();
+
+            var expectedEntity = new BirthdayMessageEntity
+            {
+                Firstname = birthdayMessage.Name.Firstname,
+                Lastname = birthdayMessage.Name.Lastname,
+                Date = birthdayMessage.Date,
+            };
+
+            BirthdayMessageEntity actualEntity = db.BithdayMessages.ToList().First();
+            Assert.Equal(expectedEntity.Firstname, actualEntity.Firstname);
+            Assert.Equal(expectedEntity.Lastname, actualEntity.Lastname);
+            Assert.Equal(expectedEntity.Date, actualEntity.Date);
+        }
+
         private void PrepareDb(Action<List<BirthdayMessage>> test)
         {
             var expectedMessages = EmployeesTestsHelper.TestEmployees
@@ -31,7 +54,7 @@ namespace BirthdayGreetings.Tests.Integration
                 .ToList();
 
             BirthdayDbContext db = new BirthdayDbContext();
-            expectedMessages.ForEach(message => db.Add(new BithdayMessageEntity
+            expectedMessages.ForEach(message => db.Add(new BirthdayMessageEntity
             {
                 Firstname = message.Name.Firstname,
                 Lastname = message.Name.Lastname,
@@ -48,11 +71,17 @@ namespace BirthdayGreetings.Tests.Integration
 
     public class EfBirthdayMessagesRepository : IBirthdayMessageRepository
     {
-        private BirthdayDbContext _db = new BirthdayDbContext();
+        private readonly BirthdayDbContext _db = new BirthdayDbContext();
 
         public void Save(BirthdayMessage message)
         {
-            throw new NotImplementedException();
+            _db.BithdayMessages.Add(new BirthdayMessageEntity
+            {
+                Date = message.Date,
+                Firstname = message.Name.Firstname,
+                Lastname = message.Name.Lastname,
+            });
+            _db.SaveChanges();
         }
 
         public List<BirthdayMessage> GetAll() =>
@@ -60,7 +89,7 @@ namespace BirthdayGreetings.Tests.Integration
                 .Select(ToDomainModel)
                 .ToList();
 
-        private static BirthdayMessage ToDomainModel(BithdayMessageEntity entity) => 
+        private static BirthdayMessage ToDomainModel(BirthdayMessageEntity entity) => 
             new BirthdayMessage(
                 new PersonName(entity.Firstname, entity.Lastname), 
                 entity.Date);

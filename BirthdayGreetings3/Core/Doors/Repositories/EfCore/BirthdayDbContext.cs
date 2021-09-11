@@ -5,7 +5,7 @@ namespace BirthdayGreetings3.Core.Doors.Repositories.EfCore
 {
     public class BirthdayDbContext: DbContext
     {
-        public DbSet<BithdayMessageEntity> BithdayMessages { get; set; }
+        public DbSet<BirthdayMessageEntity> BithdayMessages { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

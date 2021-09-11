@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BirthdayGreetings3.Core.Doors.Repositories.EfCore.Entities
 {
-    public class BithdayMessageEntity
+    public class BirthdayMessageEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
