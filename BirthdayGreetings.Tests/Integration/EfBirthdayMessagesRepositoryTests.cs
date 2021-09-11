@@ -6,16 +6,41 @@ using BirthdayGreetings.Tests.Unit;
 using BirthdayGreetings3.Core.Domain.Model;
 using BirthdayGreetings3.Core.Doors.Repositories.EfCore;
 using BirthdayGreetings3.Core.Doors.Repositories.EfCore.Entities;
+using DockerTest;
 using Xunit;
 
 namespace BirthdayGreetings.Tests.Integration
 {
-    public class EfBirthdayMessagesRepositoryTests: IDisposable
+    public class MySqlFixture: IDisposable
     {
-        private readonly InMemoryBirthdayDbContext _db = new InMemoryBirthdayDbContext();
+        public MySqlContainer Container { get; }
 
-        public EfBirthdayMessagesRepositoryTests()
+        public MySqlFixture()
         {
+            Container = new MySqlContainer(port: new Random().Next(10000, 10500));
+            Container.Start();
+        }
+
+        public void Dispose()
+        {
+            Container.Stop();
+        }
+    }
+
+    public class EfBirthdayMessagesRepositoryTests: IClassFixture<MySqlFixture>, IDisposable
+    {
+        private readonly BirthdayDbContext _db;
+
+        public EfBirthdayMessagesRepositoryTests(MySqlFixture fixture)
+        {
+            MySqlContainer container = fixture.Container;
+            _db = new MySqlBirthdayDbContext(
+                new ConnectionOptions(
+                    "localhost", 
+                    container.ExternalPort, 
+                    "Test", 
+                    "root", 
+                    container.Password));
             _db.Migrate();
         }
 
@@ -23,14 +48,14 @@ namespace BirthdayGreetings.Tests.Integration
         public void CanReadAll_FromTheRepository()
         {
             List<BirthdayMessage> expectedMessages = PrepareDb();
-            EfBirthdayMessagesRepository repo = new EfBirthdayMessagesRepository();
+            EfBirthdayMessagesRepository repo = new EfBirthdayMessagesRepository(_db);
             Assert.Equal(expectedMessages, repo.GetAll());
         }
 
         [Fact]
         public void CanSave_IntoTheRepository()
         {
-            EfBirthdayMessagesRepository repo = new EfBirthdayMessagesRepository();
+            EfBirthdayMessagesRepository repo = new EfBirthdayMessagesRepository(_db);
             var birthdayMessage = new BirthdayMessage(new PersonName("Luca", "Piccinelli"), DateTime.Now);
             repo.Save(birthdayMessage);
             
@@ -51,7 +76,7 @@ namespace BirthdayGreetings.Tests.Integration
         public void CanGetByDate()
         {
             List<BirthdayMessage> expectedMessages = PrepareDb().Take(1).ToList();
-            EfBirthdayMessagesRepository repo = new EfBirthdayMessagesRepository();
+            EfBirthdayMessagesRepository repo = new EfBirthdayMessagesRepository(_db);
             Assert.Equal(expectedMessages, repo.GetByDate(expectedMessages.First().Date));
         }
 

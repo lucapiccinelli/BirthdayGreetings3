@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace BirthdayGreetings3.Core.Doors.Repositories.EfCore
 {
-    public class MySqlBirthdayDbContext: DbContext, IBirthdayDbContext
+    public class MySqlBirthdayDbContext: BirthdayDbContext
     {
         private readonly string _connectionString;
 
@@ -17,9 +17,7 @@ namespace BirthdayGreetings3.Core.Doors.Repositories.EfCore
             _connectionString = connectionOptions.ConnectionString();
         }
 
-        public DbSet<BirthdayMessageEntity> BithdayMessages { get; set; }
-
-        public void Migrate() => Database.Migrate();
+        public override void Migrate() => Database.Migrate();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -1,11 +1,22 @@
-﻿using BirthdayGreetings3.Core.Doors.Repositories.EfCore.Entities;
+﻿using System.Drawing;
+using BirthdayGreetings3.Core.Doors.Repositories.EfCore.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BirthdayGreetings3.Core.Doors.Repositories.EfCore
 {
-    public interface IBirthdayDbContext
+    public abstract class BirthdayDbContext: DbContext
     {
-        DbSet<BirthdayMessageEntity> BithdayMessages { get; set; }
-        void Migrate();
+        protected BirthdayDbContext(): base()
+        {
+        }
+
+        protected BirthdayDbContext(DbContextOptions options): base(options)
+        {
+            
+        }
+
+        public DbSet<BirthdayMessageEntity> BithdayMessages { get; set; }
+
+        public abstract void Migrate();
     }
 }

@@ -3,12 +3,12 @@
     public class ConnectionOptions
     {
         public string Host { get; }
-        public string Port { get; }
+        public int Port { get; }
         public string DbName { get; }
         public string User { get; }
         public string Password { get; }
 
-        public ConnectionOptions(string host, string port, string dbName, string user, string password)
+        public ConnectionOptions(string host, int port, string dbName, string user, string password)
         {
             Host = host;
             Port = port;
