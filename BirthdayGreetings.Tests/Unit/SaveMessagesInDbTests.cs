@@ -36,7 +36,7 @@ namespace BirthdayGreetings.Tests.Unit
             List<BirthdayMessage> messages = messagesRepository.GetAll();
             List<BirthdayMessage> expectedMessages = new List<BirthdayMessage>
             {
-                new BirthdayMessage(EmployeesTestsHelper.John, today)
+                new BirthdayMessage(EmployeesTestsHelper.John.Name, today)
             };
 
             Assert.Equal(expectedMessages, messages);
@@ -60,7 +60,7 @@ namespace BirthdayGreetings.Tests.Unit
             List<BirthdayMessage> messages = service.GetSavedMessages(today1);
             List<BirthdayMessage> expectedMessages = new List<BirthdayMessage>
             {
-                new BirthdayMessage(EmployeesTestsHelper.Mary, today1)
+                new BirthdayMessage(EmployeesTestsHelper.Mary.Name, today1)
             };
 
             Assert.Equal(expectedMessages, messages);

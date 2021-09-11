@@ -4,18 +4,18 @@ namespace BirthdayGreetings3.Core.Domain.Model
 {
     public class BirthdayMessage
     {
-        public Employee Employee { get; }
+        public PersonName Name { get; }
         public DateTime Date { get; }
 
-        public BirthdayMessage(in Employee employee, DateTime dateTime)
+        public BirthdayMessage(in PersonName name, DateTime dateTime)
         {
-            Employee = employee;
+            Name = name;
             Date = dateTime;
         }
 
         protected bool Equals(BirthdayMessage other)
         {
-            return Equals(Employee, other.Employee);
+            return Equals(Name, other.Name);
         }
 
         public override bool Equals(object obj)
@@ -28,12 +28,12 @@ namespace BirthdayGreetings3.Core.Domain.Model
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Employee, Date);
+            return HashCode.Combine(Name, Date);
         }
 
         public override string ToString()
         {
-            return $"{nameof(Employee)}: {Employee}, {nameof(Date)}: {Date}";
+            return $"{nameof(Name)}: {Name}, {nameof(Date)}: {Date}";
         }
     }
 }

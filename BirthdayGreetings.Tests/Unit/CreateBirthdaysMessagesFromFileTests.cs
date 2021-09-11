@@ -30,7 +30,7 @@ namespace BirthdayGreetings.Tests.Unit
 
             List<BirthdayMessage> expectedBirthdayMessages = new List<BirthdayMessage>
             {
-                new BirthdayMessage(EmployeesTestsHelper.John, today)
+                new BirthdayMessage(EmployeesTestsHelper.John.Name, today)
             };
 
             Assert.Equal(expectedBirthdayMessages, birthdayMessages);

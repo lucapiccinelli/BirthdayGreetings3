@@ -9,25 +9,25 @@ namespace BirthdayGreetings3.Core.Domain.UseCases
     public class StoreBirthdayMessagesService
     {
         private readonly BirthdayMessagesService _messagesService;
-        private readonly IBirthdayMessageRepository _inMemoryMessagesRepository;
+        private readonly IBirthdayMessageRepository _messagesRepository;
 
         public StoreBirthdayMessagesService(
             IEmployeesReadSource employeesReadSource,
             IBirthdayMessageRepository messagesRepository)
         {
             _messagesService = new BirthdayMessagesService(employeesReadSource);
-            _inMemoryMessagesRepository = messagesRepository;
+            _messagesRepository = messagesRepository;
         }
 
         public void SaveBirthDaysOf(in DateTime today)
         {
             _messagesService.CreateMessages(today)
-                .ForEach(message => _inMemoryMessagesRepository.Save(message));
+                .ForEach(message => _messagesRepository.Save(message));
         }
 
         public List<BirthdayMessage> GetSavedMessages(DateTime dateTime)
         {
-            return _inMemoryMessagesRepository.GetByDate(dateTime);
+            return _messagesRepository.GetByDate(dateTime);
         }
     }
 }

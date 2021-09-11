@@ -11,7 +11,7 @@ namespace BirthdayGreetings3.Core.Domain
         {
             return employees
                 .Where((employee) => employee.IsBirthday(today))
-                .Select(employee => new BirthdayMessage(employee, today))
+                .Select(employee => new BirthdayMessage(employee.Name, today))
                 .ToList();
         }
     }
