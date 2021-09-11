@@ -3,9 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BirthdayGreetings3.Core.Doors.Repositories.EfCore
 {
-    public class BirthdayDbContext: DbContext
+    public class InMemoryBirthdayDbContext: DbContext, IBirthdayDbContext
     {
         public DbSet<BirthdayMessageEntity> BithdayMessages { get; set; }
+
+        public void Migrate(){}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

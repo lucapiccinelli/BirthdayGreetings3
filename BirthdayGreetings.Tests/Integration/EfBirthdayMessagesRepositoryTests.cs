@@ -12,8 +12,12 @@ namespace BirthdayGreetings.Tests.Integration
 {
     public class EfBirthdayMessagesRepositoryTests: IDisposable
     {
+        private readonly InMemoryBirthdayDbContext _db = new InMemoryBirthdayDbContext();
 
-
+        public EfBirthdayMessagesRepositoryTests()
+        {
+            _db.Migrate();
+        }
 
         [Fact]
         public void CanReadAll_FromTheRepository()
@@ -29,9 +33,7 @@ namespace BirthdayGreetings.Tests.Integration
             EfBirthdayMessagesRepository repo = new EfBirthdayMessagesRepository();
             var birthdayMessage = new BirthdayMessage(new PersonName("Luca", "Piccinelli"), DateTime.Now);
             repo.Save(birthdayMessage);
-
-            var db = new BirthdayDbContext();
-
+            
             var expectedEntity = new BirthdayMessageEntity
             {
                 Firstname = birthdayMessage.Name.Firstname,
@@ -39,7 +41,7 @@ namespace BirthdayGreetings.Tests.Integration
                 Date = birthdayMessage.Date,
             };
 
-            BirthdayMessageEntity actualEntity = db.BithdayMessages.ToList().First();
+            BirthdayMessageEntity actualEntity = _db.BithdayMessages.ToList().First();
             Assert.Equal(expectedEntity.Firstname, actualEntity.Firstname);
             Assert.Equal(expectedEntity.Lastname, actualEntity.Lastname);
             Assert.Equal(expectedEntity.Date, actualEntity.Date);
@@ -59,23 +61,21 @@ namespace BirthdayGreetings.Tests.Integration
                 .Select((employee, i) => new BirthdayMessage(employee.Name, DateTime.Now.AddYears(i)))
                 .ToList();
 
-            BirthdayDbContext db = new BirthdayDbContext();
-            expectedMessages.ForEach(message => db.Add(new BirthdayMessageEntity
+            expectedMessages.ForEach(message => _db.Add(new BirthdayMessageEntity
             {
                 Firstname = message.Name.Firstname,
                 Lastname = message.Name.Lastname,
                 Date = message.Date
             }));
-            db.SaveChanges();
+            _db.SaveChanges();
 
             return expectedMessages;
         }
 
         public void Dispose()
         {
-            BirthdayDbContext db = new BirthdayDbContext();
-            db.RemoveRange(db.BithdayMessages.ToList());
-            db.SaveChanges();
+            _db.RemoveRange(_db.BithdayMessages.ToList());
+            _db.SaveChanges();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace BirthdayGreetings3.Core.Doors.Repositories.EfCore
 {
     public class EfBirthdayMessagesRepository : IBirthdayMessageRepository
     {
-        private readonly BirthdayDbContext _db = new BirthdayDbContext();
+        private readonly InMemoryBirthdayDbContext _db = new InMemoryBirthdayDbContext();
 
         public void Save(BirthdayMessage message)
         {
