@@ -41,7 +41,6 @@ namespace BirthdayGreetings.Tests.Integration
                     "Test", 
                     "root", 
                     container.Password));
-            _db.Migrate();
         }
 
         [Fact]
@@ -82,6 +81,7 @@ namespace BirthdayGreetings.Tests.Integration
 
         private List<BirthdayMessage> PrepareDb()
         {
+            _db.Migrate();
             var expectedMessages = EmployeesTestsHelper.TestEmployees
                 .Select((employee, i) => new BirthdayMessage(employee.Name, DateTime.Now.AddYears(i)))
                 .ToList();

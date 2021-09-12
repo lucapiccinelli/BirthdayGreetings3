@@ -13,6 +13,7 @@ namespace BirthdayGreetings3.Core.Doors.Repositories.EfCore
         public EfBirthdayMessagesRepository(BirthdayDbContext db)
         {
             _db = db;
+            _db.Migrate();
         }
 
         public void Save(BirthdayMessage message)
