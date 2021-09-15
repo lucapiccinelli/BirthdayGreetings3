@@ -4,7 +4,7 @@ using System.Linq;
 using BirthdayGreetings3.Core.Domain.Model;
 using BirthdayGreetings3.Core.Exceptions;
 
-namespace BirthdayGreetings3.Core.Doors
+namespace BirthdayGreetings3.Core.Doors.Csv
 {
     public class EmployeeParser
     {

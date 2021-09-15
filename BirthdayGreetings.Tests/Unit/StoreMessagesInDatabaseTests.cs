@@ -1,14 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Text;
-using BirthdayGreetings.Tests.Unit;
 using BirthdayGreetings3.Core.Domain.Doors;
 using BirthdayGreetings3.Core.Domain.Model;
 using BirthdayGreetings3.Core.Domain.UseCases;
-using BirthdayGreetings3.Core.Doors;
 using Moq;
 using Xunit;
 
-namespace BirthdayGreetings.Tests.Integration
+namespace BirthdayGreetings.Tests.Unit
 {
     public class StoreMessagesInDatabaseTests
     {
@@ -21,6 +18,7 @@ namespace BirthdayGreetings.Tests.Integration
             repoMock
                 .Setup(repository => repository.GetAll())
                 .Returns(() => EmployeesTestsHelper.TestEmployees);
+
             var birthdayMessagesRepository = new InMemoryBirthdayMessagesRepository();
             BirthdayStoreService service = new BirthdayStoreService(repoMock.Object, birthdayMessagesRepository);
             var today = EmployeesTestsHelper.John.BirthDate.AddYears(30);

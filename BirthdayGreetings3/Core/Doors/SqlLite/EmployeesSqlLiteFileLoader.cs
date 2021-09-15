@@ -2,7 +2,7 @@
 using System.Data.SQLite;
 using BirthdayGreetings3.Core.Domain.Model;
 
-namespace BirthdayGreetings3.Core.Doors
+namespace BirthdayGreetings3.Core.Doors.SqlLite
 {
     public class EmployeesSqlLiteFileLoader
     {

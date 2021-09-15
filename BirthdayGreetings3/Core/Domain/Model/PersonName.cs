@@ -5,6 +5,7 @@ namespace BirthdayGreetings3.Core.Domain.Model
     public class PersonName
     {
         public string Firstname { get; }
+
         public string Lastname { get; }
 
         public PersonName(string firstname, string lastname)

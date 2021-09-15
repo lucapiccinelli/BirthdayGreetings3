@@ -2,20 +2,20 @@
 using BirthdayGreetings3.Core.Domain.Doors;
 using BirthdayGreetings3.Core.Domain.Model;
 
-namespace BirthdayGreetings3.Core.Doors
+namespace BirthdayGreetings3.Core.Doors.SqlLite
 {
-    public class EmployeesCsvRepository : IEmployeesRepository
+    public class EmployeesSqlRepository : IEmployeesRepository
     {
         private readonly string _filename;
 
-        public EmployeesCsvRepository(string filename)
+        public EmployeesSqlRepository(string filename)
         {
             _filename = filename;
         }
 
         public List<Employee> GetAll()
         {
-            return EmployeesCsvFileLoader.Load(_filename);
+            return EmployeesSqlLiteFileLoader.Load(_filename);
         }
     }
 }
