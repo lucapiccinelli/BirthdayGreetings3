@@ -6,15 +6,17 @@ namespace BirthdayGreetings3.Core.Domain.Model
     {
         private readonly DateTime _leapYearBirthDate;
         public EmailAddress EmailAddress { get; }
-        public string FirstName { get; }
-        public string LastName { get; }
+        public string FirstName => Name.Firstname;
+        public string LastName => Name.Lastname;
+
+        public PersonName Name { get; }
+
         public DateTime BirthDate { get; }
 
         public Employee(string firstname, string lastname, DateTime dateOfBirth, EmailAddress email)
         {
             EmailAddress = email;
-            FirstName = firstname;
-            LastName = lastname;
+            Name = new PersonName(firstname, lastname);
             BirthDate = dateOfBirth;
             _leapYearBirthDate = dateOfBirth;
 
