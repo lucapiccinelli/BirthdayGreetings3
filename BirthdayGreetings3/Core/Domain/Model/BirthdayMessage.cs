@@ -1,17 +1,21 @@
-﻿namespace BirthdayGreetings3.Core.Domain.Model
+﻿using System;
+
+namespace BirthdayGreetings3.Core.Domain.Model
 {
     public class BirthdayMessage
     {
-        private readonly Employee _employee;
+        public PersonName Name { get; }
+        public DateTime Date { get; }
 
-        public BirthdayMessage(in Employee employee)
+        public BirthdayMessage(PersonName name, in DateTime date)
         {
-            _employee = employee;
+            Name = name;
+            Date = date;
         }
 
         protected bool Equals(BirthdayMessage other)
         {
-            return Equals(_employee, other._employee);
+            return Equals(Name, other.Name) && Date.Equals(other.Date);
         }
 
         public override bool Equals(object obj)
@@ -24,12 +28,12 @@
 
         public override int GetHashCode()
         {
-            return (_employee != null ? _employee.GetHashCode() : 0);
+            return HashCode.Combine(Name, Date);
         }
 
         public override string ToString()
         {
-            return $"{nameof(_employee)}: {_employee}";
+            return $"{nameof(Name)}: {Name}, {nameof(Date)}: {Date}";
         }
     }
 }
