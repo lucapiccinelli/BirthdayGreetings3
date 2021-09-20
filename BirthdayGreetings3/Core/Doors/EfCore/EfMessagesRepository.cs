@@ -8,11 +8,12 @@ namespace BirthdayGreetings3.Core.Doors.EfCore
 {
     public class EfMessagesRepository: IRepository<BirthdayMessage>
     {
-        private readonly BirthdayMessagesContex _db;
+        private readonly BirthdayMessagesContext _db;
 
-        public EfMessagesRepository(BirthdayMessagesContex db)
+        public EfMessagesRepository(BirthdayMessagesContext db)
         {
             _db = db;
+            _db.Migrate();
         }
 
         public void Save(BirthdayMessage birthdayMessages)

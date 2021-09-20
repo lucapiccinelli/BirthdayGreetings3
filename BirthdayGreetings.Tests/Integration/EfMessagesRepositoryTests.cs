@@ -32,12 +32,12 @@ namespace BirthdayGreetings.Tests.Integration
     public class EfMessagesRepositoryTests: IDisposable, IClassFixture<EfMessagesRepositoryTestsFixture>
     {
         private readonly MySqlContainer _container;
-        private readonly BirthdayMessagesContex _db;
+        private readonly BirthdayMessagesContext _db;
 
         public EfMessagesRepositoryTests(EfMessagesRepositoryTestsFixture fixture)
         {
             _container = fixture.Container;
-            _db = new BirthdayMessagesContex(new MySqlConnectionOptions()
+            _db = new BirthdayMessagesContext(new MySqlConnectionOptions()
             {
                 Host = "localhost",
                 Port = _container.ExternalPort,
@@ -78,8 +78,9 @@ namespace BirthdayGreetings.Tests.Integration
 
         }
 
-        private static List<BirthdayMessage> PrepareDb(BirthdayMessagesContex db)
+        private static List<BirthdayMessage> PrepareDb(BirthdayMessagesContext db)
         {
+            db.Migrate();
             var birthdayMessages = new List<BirthdayMessage>
             {
                 new BirthdayMessage(EmployeesTestsHelper.John.Name, EmployeesTestsHelper.John.BirthDate.AddYears(30)),
