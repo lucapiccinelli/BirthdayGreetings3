@@ -42,4 +42,10 @@
     <ProjectReference Include="..\BirthdayGreetings3\BirthdayGreetings3.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="DockerTest">
+      <HintPath>.libs\DockerTest.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

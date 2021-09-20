@@ -6,17 +6,45 @@ using BirthdayGreetings.Tests.Unit;
 using BirthdayGreetings3.Core.Domain.Model;
 using BirthdayGreetings3.Core.Doors.EfCore;
 using BirthdayGreetings3.Core.Doors.EfCore.Entities;
+using DockerTest;
 using Xunit;
 
 namespace BirthdayGreetings.Tests.Integration
 {
-    public class EfMessagesRepositoryTests: IDisposable
+    public class EfMessagesRepositoryTestsFixture: IDisposable
     {
+        public MySqlContainer Container { get; }
+
+        public EfMessagesRepositoryTestsFixture()
+        {
+            int port = new Random().Next(10000, 10500);
+            Container = new MySqlContainer(port: port);
+            Container.Start();
+        }
+
+        public void Dispose()
+        {
+            Container.Stop();
+        }
+    }
+
+
+    public class EfMessagesRepositoryTests: IDisposable, IClassFixture<EfMessagesRepositoryTestsFixture>
+    {
+        private readonly MySqlContainer _container;
         private readonly BirthdayMessagesContex _db;
 
-        public EfMessagesRepositoryTests()
+        public EfMessagesRepositoryTests(EfMessagesRepositoryTestsFixture fixture)
         {
-            _db = new BirthdayMessagesContex();
+            _container = fixture.Container;
+            _db = new BirthdayMessagesContex(new MySqlConnectionOptions()
+            {
+                Host = "localhost",
+                Port = _container.ExternalPort,
+                User = "root",
+                Password = _container.Password,
+                DbName = "Test"
+            });
         }
 
         public void Dispose()
