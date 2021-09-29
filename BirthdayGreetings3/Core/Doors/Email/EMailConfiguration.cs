@@ -1,6 +1,7 @@
 ﻿using System;
+using BirthdayGreetings3.Core.Domain;
 
-namespace BirthdayGreetings3.Core.Domain
+namespace BirthdayGreetings3.Core.Doors.Email
 {
     public class EMailConfiguration
     {

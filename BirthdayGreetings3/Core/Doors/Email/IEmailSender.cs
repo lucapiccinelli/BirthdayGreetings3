@@ -1,6 +1,4 @@
-﻿using BirthdayGreetings3.Core.Domain;
-
-namespace BirthdayGreetings3.Core.Doors.Email
+﻿namespace BirthdayGreetings3.Core.Doors.Email
 {
     public interface IEmailSender
     {

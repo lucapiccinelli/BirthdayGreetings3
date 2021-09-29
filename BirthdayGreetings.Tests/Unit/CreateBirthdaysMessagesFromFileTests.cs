@@ -27,7 +27,9 @@ namespace BirthdayGreetings.Tests.Unit
         {
             DateTime today = EmployeesTestsHelper.John.BirthDate.AddYears(30);
             List<BirthdayMessage> birthdayMessages = 
-                new BirthdayMessagesService(repository).CreateMessages(today);
+                new BirthdayMessagesService<BirthdayMessage>(repository, 
+                        (time, employee) => new BirthdayMessage(employee.Name, time))
+                    .CreateMessages(today);
 
             List<BirthdayMessage> expectedBirthdayMessages = new List<BirthdayMessage>
             {

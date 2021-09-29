@@ -5,19 +5,21 @@ using BirthdayGreetings3.Core.Domain.Model;
 
 namespace BirthdayGreetings3.Core.Domain.UseCases
 {
-    public class BirthdayMessagesService
+    public class BirthdayMessagesService<T>
     {
         private readonly IEmployeesRepository _repository;
-
-        public BirthdayMessagesService(IEmployeesRepository repository)
+        private readonly Func<DateTime, Employee, T> _employTranform;
+        
+        public BirthdayMessagesService(IEmployeesRepository repository, Func<DateTime, Employee, T> employTranform)
         {
             _repository = repository;
+            _employTranform = employTranform;
         }
 
-        public List<BirthdayMessage> CreateMessages(in DateTime today)
+        public List<T> CreateMessages(in DateTime today)
         {
             List<Employee> employees = _repository.GetAll();
-            return BirthdayMessages.Of(employees, today);
+            return EmployeeTransform<T>.Of(employees, today, _employTranform);
         }
     }
 }

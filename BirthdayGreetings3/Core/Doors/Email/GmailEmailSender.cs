@@ -3,7 +3,7 @@ using BirthdayGreetings3.Core.Domain.Model;
 
 namespace BirthdayGreetings3.Core.Doors.Email
 {
-    public class GmailEmailSender
+    public class GmailEmailSender : IBirthdayEmailSender
     {
         private readonly IEmailSender _sender;
         public EMailConfiguration GmailConf { get; }
